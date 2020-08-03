@@ -31,6 +31,7 @@ func _ready():
 	gui = $GUI
 	gui.connect("button_pressed",self,"_button_pressed")
 	cols = gui.grid.get_columns()
+	gui.set_button_states(ENABLED)
 	gui.reset_stats()
 	load_game()
 	randomize()
