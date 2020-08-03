@@ -1,0 +1,291 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://theme/theme.tres" type="Theme" id=1]
+[ext_resource path="res://GUI.gd" type="Script" id=2]
+[ext_resource path="res://sprite/Block.png" type="Texture" id=3]
+[ext_resource path="res://font/font.tres" type="DynamicFont" id=4]
+
+[node name="GUI" type="CenterContainer"]
+pause_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -3.0
+margin_top = 8.0
+margin_right = -3.0
+margin_bottom = 8.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="PanelContainer" parent="."]
+margin_left = 149.0
+margin_top = 214.0
+margin_right = 490.0
+margin_bottom = 585.0
+size_flags_horizontal = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 294.0
+margin_bottom = 364.0
+size_flags_horizontal = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Left" type="CenterContainer" parent="Panel/HBoxContainer"]
+margin_right = 200.0
+margin_bottom = 357.0
+rect_min_size = Vector2( 200, 0 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/HBoxContainer/Left"]
+margin_left = 16.0
+margin_right = 184.0
+margin_bottom = 357.0
+custom_constants/separation = 16
+
+[node name="Statistics" type="GridContainer" parent="Panel/HBoxContainer/Left/VBoxContainer"]
+margin_right = 168.0
+margin_bottom = 145.0
+custom_constants/vseparation = 15
+custom_constants/hseparation = 15
+columns = 2
+
+[node name="HighScoreLabel" type="Label" parent="Panel/HBoxContainer/Left/VBoxContainer/Statistics"]
+margin_right = 90.0
+margin_bottom = 17.0
+custom_fonts/font = ExtResource( 4 )
+text = "High Score"
+
+[node name="HighScore" type="Label" parent="Panel/HBoxContainer/Left/VBoxContainer/Statistics"]
+margin_left = 105.0
+margin_right = 168.0
+margin_bottom = 17.0
+custom_fonts/font = ExtResource( 4 )
+text = "9999999"
+
+[node name="LevelLabel" type="Label" parent="Panel/HBoxContainer/Left/VBoxContainer/Statistics"]
+margin_top = 32.0
+margin_right = 90.0
+margin_bottom = 49.0
+custom_fonts/font = ExtResource( 4 )
+text = "Level"
+
+[node name="Level" type="Label" parent="Panel/HBoxContainer/Left/VBoxContainer/Statistics"]
+margin_left = 105.0
+margin_top = 32.0
+margin_right = 168.0
+margin_bottom = 49.0
+custom_fonts/font = ExtResource( 4 )
+text = "1"
+
+[node name="ScoreLabel" type="Label" parent="Panel/HBoxContainer/Left/VBoxContainer/Statistics"]
+margin_top = 64.0
+margin_right = 90.0
+margin_bottom = 81.0
+custom_fonts/font = ExtResource( 4 )
+text = "Score"
+
+[node name="Score" type="Label" parent="Panel/HBoxContainer/Left/VBoxContainer/Statistics"]
+margin_left = 105.0
+margin_top = 64.0
+margin_right = 168.0
+margin_bottom = 81.0
+custom_fonts/font = ExtResource( 4 )
+text = "9999999"
+
+[node name="LineLabel" type="Label" parent="Panel/HBoxContainer/Left/VBoxContainer/Statistics"]
+margin_top = 96.0
+margin_right = 90.0
+margin_bottom = 113.0
+custom_fonts/font = ExtResource( 4 )
+text = "Line"
+
+[node name="Lines" type="Label" parent="Panel/HBoxContainer/Left/VBoxContainer/Statistics"]
+margin_left = 105.0
+margin_top = 96.0
+margin_right = 168.0
+margin_bottom = 113.0
+custom_fonts/font = ExtResource( 4 )
+text = "1"
+
+[node name="DifficultyLabel" type="Label" parent="Panel/HBoxContainer/Left/VBoxContainer/Statistics"]
+margin_top = 128.0
+margin_right = 90.0
+margin_bottom = 145.0
+custom_fonts/font = ExtResource( 4 )
+text = "Difficulty"
+
+[node name="Difficulty" type="HSlider" parent="Panel/HBoxContainer/Left/VBoxContainer/Statistics"]
+margin_left = 105.0
+margin_top = 128.0
+margin_right = 168.0
+margin_bottom = 144.0
+min_value = 1.0
+max_value = 10.0
+value = 1.0
+rounded = true
+tick_count = 10
+
+[node name="CenterContainer" type="CenterContainer" parent="Panel/HBoxContainer/Left/VBoxContainer"]
+margin_top = 161.0
+margin_right = 168.0
+margin_bottom = 228.0
+
+[node name="NextShape" type="GridContainer" parent="Panel/HBoxContainer/Left/VBoxContainer/CenterContainer"]
+margin_left = 67.0
+margin_right = 100.0
+margin_bottom = 67.0
+custom_constants/vseparation = 1
+custom_constants/hseparation = 1
+columns = 2
+
+[node name="Cell" type="TextureRect" parent="Panel/HBoxContainer/Left/VBoxContainer/CenterContainer/NextShape"]
+margin_right = 16.0
+margin_bottom = 16.0
+texture = ExtResource( 3 )
+
+[node name="Cell2" type="TextureRect" parent="Panel/HBoxContainer/Left/VBoxContainer/CenterContainer/NextShape"]
+margin_left = 17.0
+margin_right = 33.0
+margin_bottom = 16.0
+texture = ExtResource( 3 )
+
+[node name="Cell3" type="TextureRect" parent="Panel/HBoxContainer/Left/VBoxContainer/CenterContainer/NextShape"]
+margin_top = 17.0
+margin_right = 16.0
+margin_bottom = 33.0
+texture = ExtResource( 3 )
+
+[node name="Cell4" type="TextureRect" parent="Panel/HBoxContainer/Left/VBoxContainer/CenterContainer/NextShape"]
+margin_left = 17.0
+margin_top = 17.0
+margin_right = 33.0
+margin_bottom = 33.0
+texture = ExtResource( 3 )
+
+[node name="Cell5" type="TextureRect" parent="Panel/HBoxContainer/Left/VBoxContainer/CenterContainer/NextShape"]
+margin_top = 34.0
+margin_right = 16.0
+margin_bottom = 50.0
+texture = ExtResource( 3 )
+
+[node name="Cell6" type="TextureRect" parent="Panel/HBoxContainer/Left/VBoxContainer/CenterContainer/NextShape"]
+margin_left = 17.0
+margin_top = 34.0
+margin_right = 33.0
+margin_bottom = 50.0
+texture = ExtResource( 3 )
+
+[node name="Cell7" type="TextureRect" parent="Panel/HBoxContainer/Left/VBoxContainer/CenterContainer/NextShape"]
+margin_top = 51.0
+margin_right = 16.0
+margin_bottom = 67.0
+texture = ExtResource( 3 )
+
+[node name="Cell8" type="TextureRect" parent="Panel/HBoxContainer/Left/VBoxContainer/CenterContainer/NextShape"]
+margin_left = 17.0
+margin_top = 51.0
+margin_right = 33.0
+margin_bottom = 67.0
+texture = ExtResource( 3 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/HBoxContainer/Left/VBoxContainer"]
+margin_top = 244.0
+margin_right = 168.0
+margin_bottom = 357.0
+
+[node name="Play" type="Button" parent="Panel/HBoxContainer/Left/VBoxContainer/VBoxContainer"]
+margin_right = 168.0
+margin_bottom = 35.0
+theme = ExtResource( 1 )
+text = "Play"
+
+[node name="Pause" type="Button" parent="Panel/HBoxContainer/Left/VBoxContainer/VBoxContainer"]
+pause_mode = 2
+margin_top = 39.0
+margin_right = 168.0
+margin_bottom = 74.0
+theme = ExtResource( 1 )
+text = "Pause"
+
+[node name="Control" type="Button" parent="Panel/HBoxContainer/Left/VBoxContainer/VBoxContainer"]
+margin_top = 78.0
+margin_right = 168.0
+margin_bottom = 113.0
+theme = ExtResource( 1 )
+text = "Control"
+
+[node name="Right" type="MarginContainer" parent="Panel/HBoxContainer"]
+margin_left = 204.0
+margin_right = 287.0
+margin_bottom = 357.0
+custom_constants/margin_right = 8
+custom_constants/margin_top = 8
+custom_constants/margin_left = 8
+custom_constants/margin_bottom = 8
+
+[node name="ColorRect" type="ColorRect" parent="Panel/HBoxContainer/Right"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 75.0
+margin_bottom = 349.0
+color = Color( 0, 0, 0, 1 )
+
+[node name="Grid" type="GridContainer" parent="Panel/HBoxContainer/Right"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 75.0
+margin_bottom = 349.0
+custom_constants/vseparation = 1
+custom_constants/hseparation = 1
+columns = 10
+
+[node name="Cell" type="TextureRect" parent="Panel/HBoxContainer/Right/Grid"]
+margin_right = 16.0
+margin_bottom = 16.0
+texture = ExtResource( 3 )
+
+[node name="Cell2" type="TextureRect" parent="Panel/HBoxContainer/Right/Grid"]
+margin_left = 17.0
+margin_right = 33.0
+margin_bottom = 16.0
+texture = ExtResource( 3 )
+
+[node name="Cell3" type="TextureRect" parent="Panel/HBoxContainer/Right/Grid"]
+margin_left = 34.0
+margin_right = 50.0
+margin_bottom = 16.0
+texture = ExtResource( 3 )
+
+[node name="Cell4" type="TextureRect" parent="Panel/HBoxContainer/Right/Grid"]
+margin_left = 51.0
+margin_right = 67.0
+margin_bottom = 16.0
+texture = ExtResource( 3 )
+
+[node name="ControlBox" type="AcceptDialog" parent="."]
+margin_left = 167.0
+margin_top = 320.0
+margin_right = 433.0
+margin_bottom = 480.0
+window_title = "Basic Control"
+dialog_text = "Space bar - Hard drop
+Down arrow - Soft drop
+Left arrow - Move left
+Right arrow - Move right
+Up arrow - Rotate clockwise
+Shift + Up arrow - Rotate anti-clockwise
+Difficulty slider - Set starting level"
+[connection signal="value_changed" from="Panel/HBoxContainer/Left/VBoxContainer/Statistics/Difficulty" to="." method="_on_HSlider_value_changed"]
+[connection signal="pressed" from="Panel/HBoxContainer/Left/VBoxContainer/VBoxContainer/Play" to="." method="_on_Play_pressed"]
+[connection signal="pressed" from="Panel/HBoxContainer/Left/VBoxContainer/VBoxContainer/Pause" to="." method="_on_Pause_pressed"]
+[connection signal="pressed" from="Panel/HBoxContainer/Left/VBoxContainer/VBoxContainer/Control" to="." method="_on_Control_pressed"]
+[connection signal="popup_hide" from="ControlBox" to="." method="_on_ControlBox_popup_hide"]
