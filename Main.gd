@@ -1,6 +1,6 @@
 extends CenterContainer
 
-enum {STOPPED, PLAYING, PAUSED, STOP, PLAY, PAUSE}
+enum {STOPPED, PLAYING, PAUSED}
 enum {ROTATE_LEFT, ROTATE_RIGHT}
 
 const DISABLED = true
