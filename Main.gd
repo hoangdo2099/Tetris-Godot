@@ -122,11 +122,10 @@ func _input(event):
 			bonus = 1
 			soft_drop()
 		if event.is_action_released("ui_down"):
-			bonus = 0
 			normal_drop()
 		if event.is_action_pressed("ui_accept"):
+			bonus = 2
 			hard_drop()
-			bonus = 10
 		if event.is_action_pressed("ui_left"):
 			move_left()
 			$LeftTimer.start(WAIT_TIME)
@@ -181,6 +180,7 @@ func increase_level():
 
 
 func normal_drop():
+	bonus = 0
 	$Ticker.start(TICK_SPEED / gui.level)
 
 
@@ -232,7 +232,6 @@ func _on_Ticker_timeout():
 	print(new_pos)
 	if move_shape(new_pos):
 		gui.score += bonus
-		bonus = 0
 		update_high_score()
 	else:
 		if new_pos <= END_POS:
