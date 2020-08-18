@@ -112,8 +112,6 @@ func _button_pressed(button_name):
 				gui.set_button_text("Pause", "Pause")
 				state = PLAYING
 				pause(false)
-		"Control":
-			gui.set_button_state("Control", DISABLED)
 
 
 func _input(event):
