@@ -25,7 +25,6 @@ var next_shape: ShapeData
 var pos = 0
 var count = 0
 var bonus = 0
-var harddrop_pos
 
 func _ready():
 	gui = $GUI
@@ -36,6 +35,37 @@ func _ready():
 	load_game()
 	randomize()
 
+
+func _button_pressed(button_name):
+	match button_name:
+		"Play":
+			gui.set_button_states(DISABLED)
+			gui.disable_slider()
+			_start_game()
+		
+		"Pause":
+			if state == PLAYING:
+				gui.set_button_text("Pause", "Resume")
+				state = PAUSED
+				pause() # Also, set pause mode of GUI to Process
+			else:
+				gui.set_button_text("Pause", "Pause")
+				state = PLAYING
+				pause(false)
+				
+
+func pause(value = true):
+	get_tree().paused = value
+
+
+func _start_game():
+	print("Game playing")
+	state = PLAYING
+	clear_grid()
+	gui.reset_stats(gui.high_score)
+	new_shape()
+
+
 func clear_grid():
 	grid.clear()
 	grid.resize(gui.grid.get_child_count())
@@ -43,32 +73,26 @@ func clear_grid():
 		grid[i] = false
 	gui.clear_all_cells()
 
-func rotate(dir):
-	match dir:
-		ROTATE_LEFT:
-			shape.rotate_left()
-			dir = ROTATE_RIGHT
-		ROTATE_RIGHT:
-			shape.rotate_right()
-			dir = ROTATE_RIGHT
-	return dir
 
-func move_shape(new_pos, dir = null):
-	remove_shape_from_grid()
-	dir = rotate(dir)
-	var ok = place_shape(new_pos)
-	if ok:
-		pos = new_pos
+func new_shape():
+	if next_shape:
+		shape = next_shape
 	else:
-		rotate(dir)
+		shape = Shapes.get_shape()
+	next_shape = Shapes.get_shape()
+	gui.set_next_shape(next_shape)
+	pos = START_POS
 	add_shape_to_grid()
-	return ok
+	normal_drop()
+
 	
 func add_shape_to_grid():
 	place_shape(pos, true, false, shape.color)
-	
+
+
 func remove_shape_from_grid():
 	place_shape(pos, true)
+
 
 func lock_shape_to_grid():
 	place_shape(pos, false, true)
@@ -96,22 +120,28 @@ func place_shape(index, add_tiles = false, lock = false, color = Color(0)):
 		y += 1
 	return ok
 	
-func _button_pressed(button_name):
-	match button_name:
-		"Play":
-			gui.set_button_states(DISABLED)
-			gui.disable_slider()
-			_start_game()
-		
-		"Pause":
-			if state == PLAYING:
-				gui.set_button_text("Pause", "Resume")
-				state = PAUSED
-				pause() # Also, set pause mode of GUI to Process
-			else:
-				gui.set_button_text("Pause", "Pause")
-				state = PLAYING
-				pause(false)
+
+func rotate(dir):
+	match dir:
+		ROTATE_LEFT:
+			shape.rotate_left()
+			dir = ROTATE_RIGHT
+		ROTATE_RIGHT:
+			shape.rotate_right()
+			dir = ROTATE_RIGHT
+	return dir
+
+
+func move_shape(new_pos, dir = null):
+	remove_shape_from_grid()
+	dir = rotate(dir)
+	var ok = place_shape(new_pos)
+	if ok:
+		pos = new_pos
+	else:
+		rotate(dir)
+	add_shape_to_grid()
+	return ok
 
 
 func _input(event):
@@ -145,26 +175,24 @@ func _input(event):
 			get_tree().set_input_as_handled()
 
 
-func _start_game():
-	print("Game playing")
-	state = PLAYING
-	clear_grid()
-	gui.reset_stats(gui.high_score)
-	new_shape()
+func move_left():
+	if pos % cols > 0:
+		move_shape(pos - 1)
 
-func new_shape():
-	if next_shape:
-		shape = next_shape
-	else:
-		shape = Shapes.get_shape()
-	next_shape = Shapes.get_shape()
-	gui.set_next_shape(next_shape)
-	pos = START_POS
-	add_shape_to_grid()
-	normal_drop()
 
-func pause(value = true):
-	get_tree().paused = value
+func move_right():
+	if pos % cols < cols - 1:
+		move_shape(pos + 1)
+
+func _on_LeftTimer_timeout():
+	$LeftTimer.wait_time = REPEAT_DELAY
+	move_left()
+
+
+func _on_RightTimer_timeout():
+	$RightTimer.wait_time = REPEAT_DELAY
+	move_right()
+
 
 func level_up():
 	if gui.lines > gui.level * 5:
@@ -192,39 +220,6 @@ func hard_drop():
 	$Ticker.start(HARD_DROP_TICK)
 
 
-func _game_over():
-	$Ticker.stop()
-	$LeftTimer.stop()
-	$RightTimer.stop()
-	gui.set_button_states(ENABLED)
-	gui.enable_slider()
-	state = STOPPED
-	print("Game stopped")
-	save_game()
-
-func add_to_score(rows):
-	gui.lines += rows
-	level_up()
-	var score = 100 * int(pow(2, rows - 1))
-	print("Added %d to score" % score)
-	gui.score += score
-	update_high_score()	
-
-func update_high_score():
-	if gui.score > gui.high_score:
-		gui.high_score = gui.score
-
-
-func move_left():
-	if pos % cols > 0:
-		move_shape(pos - 1)
-
-
-func move_right():
-	if pos % cols < cols - 1:
-		move_shape(pos + 1)
-
-
 func _on_Ticker_timeout():
 	var new_pos = pos + cols
 	print(new_pos)
@@ -240,14 +235,29 @@ func _on_Ticker_timeout():
 			new_shape()
 
 
-func _on_LeftTimer_timeout():
-	$LeftTimer.wait_time = REPEAT_DELAY
-	move_left()
+func add_to_score(rows):
+	gui.lines += rows
+	level_up()
+	var score = 100 * int(pow(2, rows - 1))
+	print("Added %d to score" % score)
+	gui.score += score
+	update_high_score()	
 
 
-func _on_RightTimer_timeout():
-	$RightTimer.wait_time = REPEAT_DELAY
-	move_right()
+func update_high_score():
+	if gui.score > gui.high_score:
+		gui.high_score = gui.score
+
+
+func _game_over():
+	$Ticker.stop()
+	$LeftTimer.stop()
+	$RightTimer.stop()
+	gui.set_button_states(ENABLED)
+	gui.enable_slider()
+	state = STOPPED
+	print("Game stopped")
+	save_game()
 
 
 func check_rows():
@@ -271,6 +281,7 @@ func check_rows():
 			row_number -= 1
 	if rows.empty() == false:		
 		remove_rows(rows)
+
 
 func remove_rows(rows):
 	var rows_moved = 0
@@ -296,6 +307,7 @@ func remove_rows(rows):
 			to -= 1
 		rows_moved += 1
 	add_shape_to_grid()
+
 
 func save_game():
 	var high_score_save = gui.high_score
